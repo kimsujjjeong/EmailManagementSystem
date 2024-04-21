@@ -68,6 +68,9 @@ public class UserController {
 				String dob = res.getDate("DATE_OF_BIRTH").toString();
 				String ph = res.getString("PHONE");
 				
+				
+				SessionController sess = new SessionController();
+				sess.setSession(email);
 				System.out.println("Successfully Logged In");
 				return;
 				

@@ -72,6 +72,58 @@ public class EmailController {
 		}
 	}
 	
+	public void receivedEmails(String email) {
+		String sql = "SELECT * FROM EMAILS where EMAIL_TO = ?";
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			
+			
+			ResultSet res = pstmt.executeQuery();
+			while(res.next()) {
+				int id = res.getInt("ID");
+				String email_from = res.getString("EMAIL_ID_FROM");
+				String title = res.getString("TITLE");
+				String content = res.getString("CONTENT");
+				String time = res.getTimestamp("EMAIL_DATE").toString();
+				
+				System.out.println("ID: "+id+" FROM:"+email_from+"Title:"+title+"내용:"+content+"Time"+time);
+			}
+			//pstmt.executeUpdate();
+			
+//					
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	public void sentEmails(String email) {
+		String sql = "SELECT * FROM EMAILS where EMAIL_FROM = ?";
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			
+			
+			ResultSet res = pstmt.executeQuery();
+			while(res.next()) {
+				int id = res.getInt("ID");
+				String email_from = res.getString("EMAIL_ID_FROM");
+				String title = res.getString("TITLE");
+				String content = res.getString("CONTENT");
+				String time = res.getTimestamp("EMAIL_DATE").toString();
+				
+				System.out.println("ID: "+id+" FROM:"+email_from+"Title:"+title+"내용:"+content+"Time"+time);
+			}
+			//pstmt.executeUpdate();
+			
+//					
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
 	public void spamEmails() {
 		String sql = "SELECT * FROM EMAILS where category = 3";
 		try {

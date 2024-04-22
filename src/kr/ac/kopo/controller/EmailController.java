@@ -10,9 +10,11 @@ import kr.ac.kopo.model.User;
 
 public class EmailController {
 	Connection conn;
-	public EmailController() {
+	String sessEmail;
+	public EmailController(String sess) {
 		DatabaseConnection connObj = new DatabaseConnection();
 		this.conn = connObj.getConnection();
+		this.sessEmail = sess; 
 		
 	}
 	
@@ -29,13 +31,14 @@ public class EmailController {
 		try {
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,emailTo);
-			pstmt.setString(2,emailFrom);
+			pstmt.setString(1,emailFrom);
+			pstmt.setString(2,emailTo);
 			pstmt.setString(3,title);
 			pstmt.setString(4,content);
 			
 			pstmt.executeUpdate();
 			//pstmt.executeUpdate();
+			System.out.println(emailTo+"에게 이메일 성공적으로 발송돠었습니다");
 			
 //					
 		} catch (Exception ex) {
@@ -48,10 +51,12 @@ public class EmailController {
 	}
 	
 	public void allEmails() {
-		String sql = "SELECT * FROM EMAILS";
+		String sql = "SELECT * FROM EMAILS where EMAIL_ID_FROM = ? or EMAIL_ID_TO = ?";
 		try {
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sessEmail);
+			pstmt.setString(2, sessEmail);
 			
 			
 			ResultSet res = pstmt.executeQuery();
@@ -72,12 +77,12 @@ public class EmailController {
 		}
 	}
 	
-	public void receivedEmails(String email) {
-		String sql = "SELECT * FROM EMAILS where EMAIL_TO = ?";
+	public void receivedEmails() {
+		String sql = "SELECT * FROM EMAILS where EMAIL_ID_TO = ?";
 		try {
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, email);
+			pstmt.setString(1, sessEmail);
 			
 			
 			ResultSet res = pstmt.executeQuery();
@@ -98,12 +103,12 @@ public class EmailController {
 		}
 	}
 	
-	public void sentEmails(String email) {
-		String sql = "SELECT * FROM EMAILS where EMAIL_FROM = ?";
+	public void sentEmails() {
+		String sql = "SELECT * FROM EMAILS where EMAIL_ID_FROM = ?";
 		try {
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, email);
+			pstmt.setString(1, sessEmail);
 			
 			
 			ResultSet res = pstmt.executeQuery();
@@ -125,10 +130,12 @@ public class EmailController {
 	}
 	
 	public void spamEmails() {
-		String sql = "SELECT * FROM EMAILS where category = 3";
+		String sql = "SELECT * FROM EMAILS where category = 3 AND (EMAIL_ID_FROM = ? OR EMAIL_ID_FROM = ?)";
 		try {
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sessEmail);
+			pstmt.setString(2, sessEmail);
 			
 			
 			ResultSet res = pstmt.executeQuery();
@@ -155,6 +162,7 @@ public class EmailController {
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1,id);
+	
 			
 			
 			pstmt.executeUpdate();
@@ -168,10 +176,12 @@ public class EmailController {
 	}
 	
 	public void deleteAllEmail() {
-		String sql = "DELETE FROM EMAILS";
+		String sql = "DELETE FROM EMAILS WHERE EMAIL_ID_FROM = ? OR EMAIL_ID_TO = ?";
 		try {
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sessEmail);
+			pstmt.setString(2, sessEmail);
 			
 			
 			

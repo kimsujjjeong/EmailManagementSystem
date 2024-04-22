@@ -30,7 +30,7 @@ public class AuthenticatedUI {
 		
 		Scanner sc = new Scanner(System.in);
 		int choice = sc.nextInt();
-		EmailController emC = new EmailController();
+		EmailController emC = new EmailController(sessEmail);
 		if (choice == 1) {		
 			//email 받은 메일함
 			
@@ -39,11 +39,11 @@ public class AuthenticatedUI {
 		}
 		if (choice == 2) {
 			//email 보낸 메일함
-			emC.receivedEmails(sessEmail);
+			emC.receivedEmails();
 		}
 		if (choice == 3) {
 			//email 보낸 메일함
-			emC.sentEmails(sessEmail);
+			emC.sentEmails();
 		}
 		if (choice == 4) {
 			System.out.println("ID 입력");

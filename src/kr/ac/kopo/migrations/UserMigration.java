@@ -17,7 +17,7 @@ public class UserMigration {
 				+ "    email_id VARCHAR2(100) PRIMARY KEY,\r\n"
 				+ "    name VARCHAR2(100),\r\n"
 				+ "    password VARCHAR2(100),\r\n"
-				+ "    date_of_birth  ,\r\n"	
+				+ "    date_of_birth Date ,\r\n"	
 				+ "    phone VARCHAR2(100),\r\n"
 				+ "    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP\r\n"
 				+ ")";

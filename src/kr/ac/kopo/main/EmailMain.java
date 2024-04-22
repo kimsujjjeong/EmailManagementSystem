@@ -16,17 +16,17 @@ import kr.ac.kopo.ui.AuthenticatedUI;
 public class EmailMain {
 public static void main(String[] args) {
 	
-	String ans = "n";
+	String ans = "y";
 	Scanner sc = new Scanner(System.in);
 	do {
-		System.out.println("Enter Role: [admin, authenticated, anonymous]");
+		System.out.println("role: [관리자 (1), 회원 (2), 비회원 (3)]");
 		
-		String role = sc.next();
-		if(role.equals("admin")) {
+		int role = sc.nextInt();
+		if(role == 1) {
 			AdminUI ui = new AdminUI();
 			ui.execute();
 		}
-		else if(role.equals("authenticated")) {
+		else if(role == 2) {
 			System.out.println("이메일 입력");
 			String email = sc.next();
 			SessionController sess = new SessionController();
@@ -48,11 +48,11 @@ public static void main(String[] args) {
 			ui.execute();
 		} 
 		
-		System.out.println("프로그롬 종료: y, 계속함: n");
+		System.out.println("프로그램 계속: y, 종료: n");
 		ans = sc.next();
 	
-	} while(ans.equals("n"));
-	System.out.println("감사합니다");
+	} while(ans.equals("y"));
+	System.out.println("프로그램이 종료되었습니다.");
 	sc.close();
 	return;
 	

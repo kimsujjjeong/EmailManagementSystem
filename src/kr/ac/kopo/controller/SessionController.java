@@ -37,11 +37,29 @@ public class SessionController {
 	
 
     public void setSession(String username) {
-        String sql = "INSERT INTO USER_SESSIONS (EMAIL_ID, IS_LOGGED_IN) VALUES (?, 1)";
+        String sql = "SELECT EMAIL_ID FROM USER_SESSIONS WHERE EMAIL_ID = ?";
         try {
 	        PreparedStatement pstmt = conn.prepareStatement(sql);
 	        pstmt.setString(1, username);
-	        pstmt.executeUpdate();
+	        ResultSet res = pstmt.executeQuery();
+	        
+	        String _sql = null;
+	        while(res.next()) {
+	        	_sql = "UPDATE USER_SESSIONS SET IS_LOGGED_IN = 1 WHERE EMAIL_ID=?"; 
+	        }
+	        _sql = "INSERT INTO USER_SESSIONS (EMAIL_ID, IS_LOGGED_IN)"
+    				+ "VALUES (?,1) ";
+	       System.out.println(_sql);
+	        try {
+        		
+	   	     
+        		PreparedStatement _pstmt = conn.prepareStatement(_sql);
+        		_pstmt.setString(1, username);
+    	        _pstmt.executeUpdate();
+        	} catch (SQLException e) {
+    	        e.printStackTrace();
+    	    }
+	       
 	        
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -49,7 +67,7 @@ public class SessionController {
     }
 
     public void logout(String username) {
-    	 String sql = "UPDATE SESSIONS SET IS_LOGGED_IN = 0 WHERE EMAIL_ID = ?";
+    	 String sql = "UPDATE USER_SESSIONS SET IS_LOGGED_IN = 0 WHERE EMAIL_ID = ?";
          try {
  	        PreparedStatement pstmt = conn.prepareStatement(sql);
  	        pstmt.setString(1, username);

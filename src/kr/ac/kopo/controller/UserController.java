@@ -24,7 +24,7 @@ public class UserController {
 		String phone = u.getph();
 		
 		String sql = "INSERT INTO USERS (EMAIL_ID, NAME, PASSWORD, DATE_OF_BIRTH, PHONE) "
-				+ "VALUES (?, ?, ?, TO_DATE(?, 'YYYY-MM-DD'), ?) ";
+				+ " VALUES (?, ?, ?, TO_DATE(?, 'YYYY-MM-DD'), ?) ";
 		
 		try {
 			

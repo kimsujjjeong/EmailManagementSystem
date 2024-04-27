@@ -19,28 +19,73 @@ public static void main(String[] args) {
 	String ans = "y";
 	Scanner sc = new Scanner(System.in);
 	do {
-		System.out.println("role: [관리자 (1), 회원 (2), 비회원 (3)]");
+		SessionController sess = new SessionController();
+		int isloggedIn = sess.isLoggedIn();
+		System.out.println(" ");
+		System.out.println(" * * * W e l c o m e ! ! " );
+		System.out.println(" This is Orange Email! * * * ");
+		System.out.println(" ");
 		
-		int role = sc.nextInt();
+		int role;
+		
+		if(isloggedIn == 1) {
+			System.out.printf( "오렌지 메일함 \t (Email Menu)   \t\t\n");
+			role = 2;
+		} else {
+			System.out.println( "번호를 선택하세요 ! ");
+			System.out.printf( "관리자 \t (admin) \t\t[1]\n");
+			System.out.printf( "로그인 \t (login)   \t\t[2]\n");
+			System.out.printf( "회원가입 \t (Sign up) \t\t[3]\n");
+			role = sc.nextInt();
+		}
+		
+		
 		if(role == 1) {
 			AdminUI ui = new AdminUI();
 			ui.execute();
 		}
 		else if(role == 2) {
-			System.out.println("이메일 입력");
-			String email = sc.next();
-			SessionController sess = new SessionController();
-			if(sess.isLoggedIn(email) == 0) {
-				System.err.println("로그인 하지 못함");
-				
-				ans = "n";
+			//System.out.println("아이디를 입력하세요.");
+			//String email = sc.next();
+			//회원 로그인 상태 확인 로그인->메일함으로 이동
+			
+			if(sess.isLoggedIn() == 0) {
+				System.out.println("아이디를 입력하세요.");
+				String email = sc.next();
+				System.out.println("비밀번호를 입력하세요.");
+				String password = sc.next();
+			
+				User u = new User(email, password);
+				UserController uc = new UserController();
+				if(uc.signIn(u) == 0) {
+					System.out.println("아이디 또는 비밀번호를 찾으시겠습니까? (y/n))");
+					String res = sc.next();
+					
+					if(res.equals("y")) {
+						System.out.println("생년월일 입력하세요");
+						String bir = sc.next();
+						
+						System.out.println("핸드폰번호를 입력하세요");
+						String phone = sc.next();
+						
+						uc.findIDPassword(bir, phone);
+					}
+				} 
 				continue;
+				//AuthenticatedUI aui = new AuthenticatedUI(sess.sessionEmail());
+				//aui.execute();
+				
+				
+				
+				
 
 			}
-			else {
-				AuthenticatedUI aui = new AuthenticatedUI(email);
+			if(sess.isLoggedIn() == 1) {
+				
+				AuthenticatedUI aui = new AuthenticatedUI(sess.sessionEmail());
 				aui.execute();
 			}
+			
 			
 		}
 		else {

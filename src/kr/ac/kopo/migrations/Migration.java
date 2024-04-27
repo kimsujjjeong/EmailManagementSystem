@@ -13,7 +13,7 @@ public class Migration {
 		
 	}
 	
-	public void installDatabase() {
+	public void installDatabase() { //디비테이블 생성
 		String email_sql = "CREATE TABLE emails (\r\n"
 				+ "    ID INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\r\n"
 				+ "    email_id_from VARCHAR2(255),\r\n"
@@ -65,12 +65,12 @@ public class Migration {
 		
 		
 		try (
-				PreparedStatement pstmt1 = conn.prepareStatement(user_sql);
+				//PreparedStatement pstmt1 = conn.prepareStatement(user_sql);
 				PreparedStatement pstmt2 = conn.prepareStatement(email_sql);
 				PreparedStatement pstmt3 = conn.prepareStatement(session_sql);
 				
 			){
-			pstmt1.execute();
+			//pstmt1.execute();
 			pstmt2.execute();
 			pstmt3.execute();
 			

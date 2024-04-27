@@ -6,24 +6,18 @@ import kr.ac.kopo.controller.UserController;
 import kr.ac.kopo.model.User;
 
 public class AnonymousUI {
+	
+	
 	public void execute() {
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("--------Anonymous User Menu--------");
-		
-		System.out.println("1. 회원 가입");
-		System.out.println("2. 로그인");
-		System.out.println("**번호를 입력하세요**");
-		
-		
-		int choice = sc.nextInt();
 		
 		
 		
 		
 		
-		if (choice == 1) {
-			//sign up()
+		
+			//회원 가입()
 			
 			System.out.println("--------회원 가입--------");
 			System.out.println("\t");
@@ -36,7 +30,7 @@ public class AnonymousUI {
 			String cpassword = sc.next();
 			
 			if(!password.equals(cpassword)) {
-				System.err.println("비밀번호 일치하지 않는다");
+				System.err.println("비밀번호 불일치");
 				System.exit(1);
 			}
 			System.out.println("3. 이름");
@@ -56,18 +50,8 @@ public class AnonymousUI {
 			UserController uc = new UserController();
 			uc.signUp(u);
 			
-		}
-		if (choice == 2) {
-			//login()
-			System.out.println("아이디를 입력하세요 ");
-			String emailID = sc.next();
-			System.out.println("비밀번호를 입력하세요 ");
-			String password = sc.next();
+	
 		
-			User u = new User(emailID, password);
-			UserController uc = new UserController();
-			uc.signIn(u);
-		}
 		
 		
 	}

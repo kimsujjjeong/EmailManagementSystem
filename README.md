@@ -1,4 +1,4 @@
-#Orange Mail Project
+# Orange Mail Project
 
 마이그레이션을 이용하여 자바에 데이터베이스 테이블을 생성 삭제하는 방법을 썼습니다.
 
